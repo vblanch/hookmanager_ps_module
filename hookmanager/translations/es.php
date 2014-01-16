@@ -1,0 +1,32 @@
+<?php
+
+global $_MODULE;
+$_MODULE = array();
+$_MODULE['<{hookmanager}prestashop>hookmanager_89e34c904e844dc8bb4c3000bcfb1ed2'] = 'Gestor de Hooks';
+$_MODULE['<{hookmanager}prestashop>hookmanager_04c35f0fdfca66195bbcbad86aac6d59'] = 'Gestiona los hooks de Prestashop fácilmente.';
+$_MODULE['<{hookmanager}prestashop>hookmanager_876f23178c29dc2552c0b48bf23cd9bd'] = '¿Está seguro de querer desinstalar?';
+$_MODULE['<{hookmanager}prestashop>hookmanager_7cacfc5aff8bff642d13f30d5bcb8572'] = 'Hook inválido para actualizar';
+$_MODULE['<{hookmanager}prestashop>hookmanager_0e7150513e0dfad90317e26ad40cb31c'] = 'Hook actualizado con éxito';
+$_MODULE['<{hookmanager}prestashop>hookmanager_764583bed5fee432862864197371e3f5'] = 'Por favor complete el campo \'Nombres de hook\'';
+$_MODULE['<{hookmanager}prestashop>hookmanager_26b8ae452b4f4cd28d5f66d4e9a018c0'] = 'El hook no pudo crearse';
+$_MODULE['<{hookmanager}prestashop>hookmanager_cdfdc1584282a7b32f8b402d2bd62d9a'] = 'Hook creado con éxito';
+$_MODULE['<{hookmanager}prestashop>hookmanager_5612bdb8a4289d220ede0135dfae7d76'] = 'Hook inválido para eliminar';
+$_MODULE['<{hookmanager}prestashop>hookmanager_62b52feb66548ef900b1e9643cc37050'] = 'Hook eliminado con éxito';
+$_MODULE['<{hookmanager}prestashop>hookmanager_b1609b6af66f881189d5d1d29e6827dc'] = 'No hay hooks disponibles.';
+$_MODULE['<{hookmanager}prestashop>hookmanager_f1206f9fadc5ce41694f69129aecac26'] = 'Configurar';
+$_MODULE['<{hookmanager}prestashop>hookmanager_b9b371458ab7c314f88b81c553f6ce51'] = 'Hook';
+$_MODULE['<{hookmanager}prestashop>hookmanager_58db3e9901347cab90feebcbf01f0ed6'] = 'Seleccione un hook';
+$_MODULE['<{hookmanager}prestashop>hookmanager_ecb51b944e227768e0c149b5c959e957'] = 'Seleccione el hook a actualizar, indique su visibilidad en posiciones y presione el botón \'Guardar\'.';
+$_MODULE['<{hookmanager}prestashop>hookmanager_c9cc8cce247e49bae79f15173ce97354'] = 'Guardar';
+$_MODULE['<{hookmanager}prestashop>hookmanager_cc9db1f3df1ecb6cd779b222f51674d8'] = 'Nuevo hook';
+$_MODULE['<{hookmanager}prestashop>hookmanager_cc467dc03f12092368622d10f34f1b85'] = 'Nombre(s) de hook:';
+$_MODULE['<{hookmanager}prestashop>hookmanager_4fab3ef81b72338840b13e6b5a2c1620'] = 'Introduzca el nombre o nombres de los hooks a crear, separados por comas.';
+$_MODULE['<{hookmanager}prestashop>hookmanager_e7340cb775010a6ebb51ee964368eeaa'] = 'Mostrar en Posiciones:';
+$_MODULE['<{hookmanager}prestashop>hookmanager_00d23a76e43b46dae9ec7aa9dcbebb32'] = 'Activado';
+$_MODULE['<{hookmanager}prestashop>hookmanager_b9f5c797ebbf55adccdd8539a65a0241'] = 'Desactivado';
+$_MODULE['<{hookmanager}prestashop>hookmanager_ee96325ef7c3cc559fb3decf2ec83dba'] = 'Mostrar el hook en Posiciones para permitir la asociación de módulos.';
+$_MODULE['<{hookmanager}prestashop>hookmanager_f2a6c498fb90ee345d997f888fce3b18'] = 'Eliminar';
+$_MODULE['<{hookmanager}prestashop>hookmanager_a10b8c7ae334e70634f7c750e04d1f44'] = 'Seleccione el hook a eliminar y presione el botón \'Eliminar\'.';
+$_MODULE['<{hookmanager}prestashop>hookmanager_5e53d26817cbf90d3f4b4d7d2eb82e4a'] = '¿Está seguro de querer eliminar este hook?';
+$_MODULE['<{hookmanager}prestashop>hookmanager_0584e445d656b83b431227bb80ff0c30'] = 'Donar';
+$_MODULE['<{hookmanager}prestashop>hookmanager_b7439bd64adf2a6e8dd69127941e8595'] = 'Si le gusta este módulo, por favor considere hacer una donación para dar soporte al autor usando Paypal, Bitcoin, Litecoin o Dogecoin';
