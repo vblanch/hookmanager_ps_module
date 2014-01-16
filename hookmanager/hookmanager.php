@@ -30,20 +30,25 @@ class HookManager extends Module
 		$this->version = '1.0';
 		$this->author = 'Victor Blanch';
 		$this->need_instance = 0;
-		$this->ps_versions_compliancy = array('min' => '1.5', 'max' => '1.5.9.9');
+		$this->ps_versions_compliancy = array('min' => '1.4.0.0', 'max' => '1.5.9.9');
 
 		parent::__construct();
 
 		$this->displayName = $this->l('Hook Manager');
 		$this->description = $this->l('Manage Prestashop hooks easily.');
-
 		$this->confirmUninstall = $this->l('Are you sure you want to uninstall?');
+		
+		/* Backward compatibility */
+		if (_PS_VERSION_ < '1.5')
+			   require(_PS_MODULE_DIR_.$this->name.'/backward_compatibility/backward.php');		
 	}
   
 	public function install()
 	{
-		if (Shop::isFeatureActive())
-			Shop::setContext(Shop::CONTEXT_ALL);
+		//context feature only works in ps 1.5 or higher
+		if (_PS_VERSION_ >= '1.5')
+			if (Shop::isFeatureActive())
+				Shop::setContext(Shop::CONTEXT_ALL);
 
 		return parent::install();
 	}
@@ -76,8 +81,8 @@ class HookManager extends Module
 			}
 		}
 		
-		//2. hook creation
-		
+		//2. Hook creation
+
 		if (Tools::isSubmit('submitNewHook')){
 			if (!($hook_names = Tools::getValue('hook_names')) || empty($hook_names))
 				$output .= '<div class="alert error">'.$this->l('Please complete the \'Hook names\' field').'</div>';
@@ -86,10 +91,14 @@ class HookManager extends Module
 				$hook_names_list = explode(',',$hook_names);
 				foreach($hook_names_list as $hname){
 					$hname = trim($hname);
-					$registry = $this->registerHook($hname);
-					//print_r($registry);
+					if (_PS_VERSION_ < '1.5')
+						$registry = $this->registerHookCustom($hname);	//for PS 1.4 or older
+					else
+						$registry = $this->registerHook($hname);
 					if(!$registry){
 						$output .= '<div class="alert error">'.$this->l('Hook could not be created').'</div>';
+						$output .= '<div class="alert error">'.$registry.'</div>';
+						$output .= '<div class="alert error">'.$hname.'</div>';
 					}else{				
 						//update show in positions
 						$pos_val = Tools::getValue('show_in_positions');
@@ -102,9 +111,8 @@ class HookManager extends Module
 							FROM `'._DB_PREFIX_.'module`
 							WHERE `name` = "'.$this->name.'"';
 							
-						//delete this module attackment to the hook (so it's empty!)
+						//delete this module attachment to the hook (so it's empty!)
 						if ($id_module = Db::getInstance()->getValue($sql)){
-							//print_r($id_module);
 							Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'hook_module` WHERE `id_module` = "'.$id_module.'"');						
 						}
 						 
@@ -127,7 +135,6 @@ class HookManager extends Module
 					WHERE `name` = "'.$name_hook.'"';
 				if ($id_hook = Db::getInstance()->getValue($sql)){
 					//delete all module attachments
-					print_r($id_hook);
 					Db::getInstance()->execute('DELETE FROM `'._DB_PREFIX_.'hook_module` WHERE `id_hook` = "'.$id_hook.'"');										
 					//delete hook
 					Db::getInstance()->execute('DELETE FROM '._DB_PREFIX_.'hook WHERE name = "'.$name_hook.'"'); 	
@@ -144,7 +151,7 @@ class HookManager extends Module
 	//shows and displays form
 	public function displayForm()
 	{		
-		$hooks = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT name, position FROM '._DB_PREFIX_.'hook');
+		$hooks = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT name, position FROM '._DB_PREFIX_.'hook ORDER BY name');
 		
 		//1. hook update
 		
@@ -278,6 +285,32 @@ class HookManager extends Module
 		';
 		
 		return $html;		
-	}	
+	}
+	
+	//function to register a hook in prestashop 1.4.x and older
+	public function registerHookCustom($hook_name)
+	{
+		$hook_title = $hook_name; //TODO - allow custom hook name and description and setup a liveedit option
+		
+		//find max hook id
+		$max_result = Db::getInstance()->getRow('
+			SELECT MAX(`id_hook`) AS max
+			FROM `'._DB_PREFIX_.'hook`');
+		
+		if (!$max_result)
+			return false; 
+		
+		//calculate hook id
+		$hook_id = (int)($max_result['max'])+1;
+		
+		//register module in hook table
+		$return = Db::getInstance()->Execute('
+			INSERT INTO `'._DB_PREFIX_.'hook` (`id_hook`, `name`, `title`, `description`, `position`, `live_edit`) 
+			VALUES ('.$hook_id.',
+			\''.$hook_name.'\', 
+			\''.$hook_title.'\', NULL, 0, 0)');			
+		
+		return $return;
+	}
 }
 ?>
