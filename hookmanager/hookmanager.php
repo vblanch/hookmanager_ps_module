@@ -27,7 +27,7 @@ class HookManager extends Module
 		{
 		$this->name = 'hookmanager';
 		$this->tab = 'content_management';
-		$this->version = '1.0';
+		$this->version = '1.0.4';
 		$this->author = 'Victor Blanch';
 		$this->need_instance = 0;
 		$this->ps_versions_compliancy = array('min' => '1.4.0.0', 'max' => '1.6.9.9');
