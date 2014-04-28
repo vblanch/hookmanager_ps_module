@@ -87,6 +87,9 @@ class HookManager extends Module
 			if (!($hook_names = Tools::getValue('hook_names')) || empty($hook_names))
 				$output .= '<div class="alert error">'.$this->l('Please complete the \'Hook names\' field').'</div>';
 			else{
+				//get title and desc
+				$hook_title = Tools::getValue('hook_title');
+				$hook_desc = Tools::getValue('hook_desc');
 				//parse hook names, register them			
 				$hook_names_list = explode(',',$hook_names);
 				foreach($hook_names_list as $hname){
@@ -100,12 +103,12 @@ class HookManager extends Module
 						$output .= '<div class="alert error">'.$registry.'</div>';
 						$output .= '<div class="alert error">'.$hname.'</div>';
 					}else{				
-						//update show in positions
+						//1. update show in positions
 						$pos_val = Tools::getValue('show_in_positions');
 						if($pos_val==null) $pos_val = 0; 		
-						Db::getInstance()->execute('UPDATE '._DB_PREFIX_.'hook SET position = "'.$pos_val.'" WHERE name = "'.$hname.'"'); 	
-						//remove from hook-module (keep the hook clean!)
+						Db::getInstance()->execute('UPDATE '._DB_PREFIX_.'hook SET position = "'.$pos_val.'", title = "'.$hook_title.'", description = "'.$hook_desc.'" WHERE name = "'.$hname.'"'); 	
 						
+						//2. remove from hook-module (keep the hook clean!)						
 						// Get module id 
 						$sql = 'SELECT id_module
 							FROM `'._DB_PREFIX_.'module`
@@ -208,9 +211,17 @@ class HookManager extends Module
 		<fieldset><legend>'.$this->l('New hook').'</legend>
 			<label>'.$this->l('Hook name(s):').'</label>
 				<div class="margin-form">
-					<input type="text" name="hook_names" value="'.''.'" />
+					<input type="text" name="hook_names" value="" />
 					<p class="clear">'.$this->l('Enter the name or names of the hooks to create, separated by commas.').'</p>
-				</div>
+				</div>				
+				<div class="margin-form">
+					<input type="text" name="hook_title" value="" />
+					<p class="clear">'.$this->l('Enter the title for the hook(s) to create, or leave it blank.').'</p>
+				</div>						
+				<div class="margin-form">
+					<input type="text" name="hook_desc" value="" />
+					<p class="clear">'.$this->l('Enter the description for the hook(s) to create, or leave it blank.').'</p>
+				</div>				
 				<label>'.$this->l('Show in Positions:').'</label>
 				<div class="margin-form">
 					<input type="radio" name="show_in_positions" id="show_on" value="1" '.'checked="checked"'.'/>
