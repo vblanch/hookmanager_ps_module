@@ -154,6 +154,7 @@ class HookManager extends Module
 	//shows and displays form
 	public function displayForm()
 	{		
+		$html = '';
 		$hooks = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT name, position FROM '._DB_PREFIX_.'hook ORDER BY name');
 		
 		//1. hook update
