@@ -158,7 +158,7 @@ class HookManager extends Module
 		$hooks = Db::getInstance(_PS_USE_SQL_SLAVE_)->executeS('SELECT name, position FROM '._DB_PREFIX_.'hook ORDER BY name');
 		
 		//1. hook update
-		
+		$html = null;
 		if (!count($hooks)){
 			$html .= $this->displayError($this->l('No hooks available.'));
 		}else{		
